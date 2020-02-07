@@ -5,6 +5,7 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
     public GameObject menu;
+    public Animator menuAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,9 @@ public class Menu : MonoBehaviour
 
     public void PlayButton()
     {
+        menuAnimator.SetTrigger("PlayButtonPressed");
         Time.timeScale = 1;
-        menu.SetActive(false);
+       // menu.SetActive(false);
+        
     }
 }
