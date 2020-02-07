@@ -13,21 +13,23 @@ public class Pipo : MonoBehaviour
     public Text scoreText;
     private int score = 0;
     public Transform lookAt;
+    private int highScore = 0;
+    public Text highText;
 
     // Start is called before the first frame update
     void Start()
     {
         myRigidbody2D = GetComponent<Rigidbody2D>();
+
+        highScore = PlayerPrefs.GetInt("highScore");
+        highText.text = "    HIGH SCORE: " + highScore;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            myRigidbody2D.velocity = Vector2.up * speed;       //Vector2.up es el equivalente al eje y. Lo multiplico  por la velocidad.
-        }
+        
 
     }
 
@@ -35,7 +37,10 @@ public class Pipo : MonoBehaviour
     {
         string sceneName = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene(sceneName);
-        
+        if (score > highScore)
+        {
+            PlayerPrefs.SetInt("highScore", score);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -52,6 +57,11 @@ public class Pipo : MonoBehaviour
 
         float angle = Mathf.Atan2(targetPosition.y,targetPosition.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            myRigidbody2D.velocity = Vector2.up * speed;       //Vector2.up es el equivalente al eje y. Lo multiplico  por la velocidad.
+        }
     }
 
 }
